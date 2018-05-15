@@ -1,0 +1,32 @@
+k8s:
+  # Stable versions only
+  version: 1.9
+  network:
+    provider: calico
+    cidr: 192.168.0.0/16
+nodes:
+  node01:
+    username: root
+    ip: 172.17.51.105
+    identity_file: '/home/mivanov/.ssh/id_rsa'
+    labels:
+      - k8s-tainted-master
+      - docker
+      - my-custom-label
+    roles:
+      - 1
+      - 2
+  node02:
+    username: root
+    ip: 172.17.51.152
+    identity_file: '/home/mivanov/.ssh/id_rsa'
+    labels:
+      - k8s-tainted-master
+      - docker
+  node03:
+    username: root
+    ip: 172.17.49.6
+    identity_file: '/home/mivanov/.ssh/id_rsa'
+    labels:
+      - k8s-tainted-master
+      - docker
