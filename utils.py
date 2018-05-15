@@ -41,6 +41,8 @@ def execute_on_remote_label(f, label):
         # Remove first line in function
         source_code.pop(0)
         source_code.append('{}{}'.format(f.__name__, args))
+        if source_code[0].startswith('    '):
+            source_code = [x.replace('    ', '', 1) for x in source_code]
         code = '\n'.join(source_code)
         for _node in roles[label]:
             for node in nodes:
@@ -61,5 +63,12 @@ def create_repo(repo_name, repo_content):
     subprocess.Popen('echo "{}" > /etc/apt/sources.list.d/{}'.format(repo_content, str(repo_name)), shell=True)
 
 
-def install_pkgs():
-    pass
+def install_pkgs(pkgs_list, label):
+    @execute_on_remote_label(label)
+    def install_pkgs_on_label(pkg_list):
+        import subprocess
+
+        subprocess.Popen('apt-get update && apt-get install -y --allow-unauthenticated {}'.format(' '.join(pkg_list)),
+                         shell=True)
+
+    install_pkgs_on_label(pkgs_list)

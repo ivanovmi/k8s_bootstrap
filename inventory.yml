@@ -11,6 +11,7 @@ nodes:
     identity_file: '/home/mivanov/.ssh/id_rsa'
     labels:
       - k8s-tainted-master
+      - k8s
       - docker
       - my-custom-label
     roles:
@@ -22,6 +23,7 @@ nodes:
     identity_file: '/home/mivanov/.ssh/id_rsa'
     labels:
       - k8s-tainted-master
+      - k8s
       - docker
   node03:
     username: root
@@ -29,4 +31,5 @@ nodes:
     identity_file: '/home/mivanov/.ssh/id_rsa'
     labels:
       - k8s-tainted-master
+      - k8s
       - docker
