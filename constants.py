@@ -7,7 +7,7 @@ K8S_NETWORK_PROVIDERS = {
         'https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml'
 }
 K8S_REPO = 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
-K8S_VERSION = ['1.9']
+K8S_VERSION = ['1.9', '1.8']
 K8S_PACKAGES = ['kubelet', 'kubeadm', 'kubectl', 'kubernetes-cni']
 
 # Docker constants

@@ -1,17 +1,19 @@
+docker:
+  bip: 192.168.20.5/24
 k8s:
   # Stable versions only
   version: 1.9
   network:
-    provider: calico
-    cidr: 192.168.0.0/16
+    provider: flannel # calico
+    cidr: 10.244.0.0/16 # 192.168.0.0/16
 nodes:
   node01:
     username: root
     ip: 172.17.51.105
     identity_file: '/home/mivanov/.ssh/id_rsa'
     labels:
-      - k8s-tainted-master
       - k8s
+      - k8s-master
       - docker
       - my-custom-label
     roles:
@@ -22,14 +24,14 @@ nodes:
     ip: 172.17.51.152
     identity_file: '/home/mivanov/.ssh/id_rsa'
     labels:
-      - k8s-tainted-master
       - k8s
+      - k8s-worker
       - docker
   node03:
     username: root
     ip: 172.17.49.6
     identity_file: '/home/mivanov/.ssh/id_rsa'
     labels:
-      - k8s-tainted-master
       - k8s
+      - k8s-worker
       - docker

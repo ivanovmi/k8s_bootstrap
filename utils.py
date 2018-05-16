@@ -47,6 +47,7 @@ def execute_on_remote_label(f, label):
         for _node in roles[label]:
             for node in nodes:
                 if _node == node.name:
+                    print(node.name)
                     node.ssh_client.connect(node.ip, username=node.user, key_filename=node.key)
                     stdin, stdout, stderr = node.ssh_client.exec_command('echo "{}" > run.py; python3 run.py'.format(code))
                     # FIXME
@@ -54,6 +55,8 @@ def execute_on_remote_label(f, label):
                     if stderr:
                         raise Exception(stderr)
                     node.ssh_client.close()
+                    sto = stdout.readlines()
+        return sto[0] if len(sto) > 0 else None
     return aux
 
 
@@ -67,8 +70,7 @@ def install_pkgs(pkgs_list, label):
     @execute_on_remote_label(label)
     def install_pkgs_on_label(pkg_list):
         import subprocess
-
-        subprocess.Popen('apt-get update && apt-get install -y --allow-unauthenticated {}'.format(' '.join(pkg_list)),
+        subprocess.Popen('export DEBIAN_FRONTEND=noninteractive; apt-get update && apt-get install -y --allow-unauthenticated {}'.format(' '.join(pkg_list)),
                          shell=True)
 
     install_pkgs_on_label(pkgs_list)
