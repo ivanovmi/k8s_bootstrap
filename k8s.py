@@ -47,7 +47,7 @@ def init_network(provider):
 @utils.execute_on_remote_label('k8s-master')
 def launch_kube_proxy():
     import subprocess
-    subprocess.Popen('kubectl proxy &', shell=True)
+    subprocess.Popen('kubectl proxy', shell=True)
 
 
 class DockerConfig(object):
