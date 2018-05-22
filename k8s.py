@@ -49,10 +49,11 @@ def launch_kube_proxy():
     import subprocess
     subprocess.Popen('kubectl proxy', shell=True)
 
+
 @utils.execute_on_remote_label('k8s-master')
 def setup_labels():
     import subprocess
-    subprocess.Popen("", shell=True)
+    subprocess.Popen("kubectl taint nodes --all node-role.kubernetes.io/master-", shell=True)
 
 
 class DockerConfig(object):

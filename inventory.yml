@@ -9,7 +9,7 @@ k8s:
 nodes:
   node01:
     username: root
-    ip: 172.17.51.105
+    ip: 172.17.51.59
     identity_file: '/home/mivanov/.ssh/id_rsa'
     labels:
       - k8s
@@ -21,7 +21,7 @@ nodes:
       - 2
   node02:
     username: root
-    ip: 172.17.51.152
+    ip: 172.17.51.105
     identity_file: '/home/mivanov/.ssh/id_rsa'
     labels:
       - k8s
@@ -29,7 +29,7 @@ nodes:
       - docker
   node03:
     username: root
-    ip: 172.17.49.6
+    ip: 172.17.51.152
     identity_file: '/home/mivanov/.ssh/id_rsa'
     labels:
       - k8s
