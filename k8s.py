@@ -19,7 +19,7 @@ def init_master(version, cidr, kubelet_version):
                                shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, close_fds=True)
     out, err = process.communicate()
     print(str(out).split('\\\n')[-3].strip())
-    time.sleep(60)
+    time.sleep(20)
     subprocess.Popen('mkdir -p $HOME/.kube && cp /etc/kubernetes/admin.conf $HOME/.kube/config && chown $(id -u):$(id -g) $HOME/.kube/config', shell=True)
 
 
@@ -49,6 +49,11 @@ def launch_kube_proxy():
     import subprocess
     subprocess.Popen('kubectl proxy', shell=True)
 
+@utils.execute_on_remote_label('k8s-master')
+def setup_labels():
+    import subprocess
+    subprocess.Popen("", shell=True)
+
 
 class DockerConfig(object):
     def __init__(self, **kwargs):
@@ -60,9 +65,6 @@ class K8SNetwork(object):
         self.cidr = kwargs['cidr']
         self.provider = kwargs['provider']
 
-    #def __repr__(self):
-    #    return '\n\t'.join('{}: {}'.format(key, value) for key, value in self.__dict__.items())
-
 
 class K8SConfig(object):
     def __init__(self, **kwargs):
@@ -72,6 +74,3 @@ class K8SConfig(object):
         else:
             self.version = 'stable-' + str(kwargs['version'])
             self.kubelet_version = str(kwargs['version']) + '.0-00'
-
-    #def __repr__(self):
-    #    return '\n'.join('{}: {}'.format(key, value) for key, value in self.__dict__.items())

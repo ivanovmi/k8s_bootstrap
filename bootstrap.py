@@ -6,6 +6,7 @@ import time
 import yaml
 
 import k8s
+import ccp
 import constants
 import utils
 
@@ -49,9 +50,12 @@ if __name__ == '__main__':
         join_token = k8s.init_master(k8s_config.version, k8s_config.network.cidr, k8s_config.kubelet_version)
         log.info('Init k8s network')
         k8s.init_network(k8s_config.network.provider)
-        time.sleep(30)
+        time.sleep(10)
         log.info('Init k8s worker')
         k8s.init_worker(join_token, k8s_config.kubelet_version, k8s_config.network.cidr)
         log.info('Launch k8s proxy')
         k8s.launch_kube_proxy()
-
+        log.info('Setup labels stage')
+        k8s.setup_labels()
+        ccp.setup_ccp()
+        ccp.deploy_local_registry()
